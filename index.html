@@ -7,167 +7,152 @@
     body {
       background: black;
       color: white;
-      font-family: monospace;
+      font-family: Arial, sans-serif;
       text-align: center;
       overflow: hidden;
     }
+    #about, #video-section, #intro-section, #virus-section {
+      display: none;
+    }
+    img {
+      max-width: 300px;
+      border-radius: 10px;
+    }
     button {
-      font-size: 20px;
+      background: red;
+      color: white;
+      border: none;
       padding: 10px 20px;
       margin: 10px;
       cursor: pointer;
-      border: none;
-      border-radius: 10px;
-      background: linear-gradient(45deg, #00f0ff, #ff00ff);
-      color: white;
-      box-shadow: 0 0 15px #00f0ff, 0 0 25px #ff00ff;
-      animation: glow 1s infinite alternate;
+      font-size: 18px;
+      border-radius: 5px;
     }
-    @keyframes glow {
-      from { box-shadow: 0 0 5px #00f0ff, 0 0 10px #ff00ff; }
-      to   { box-shadow: 0 0 20px #ff00ff, 0 0 40px #00f0ff; }
-    }
-    .intro img {
-      max-width: 300px;
-      border-radius: 15px;
-      margin-top: 20px;
-      box-shadow: 0 0 20px #00f0ff;
-    }
-    .glitch {
+    .falling {
       position: absolute;
-      font-size: 24px;
-      user-select: none;
-      animation: colorchange 0.2s infinite;
+      font-size: 20px;
+      animation: fall linear forwards;
     }
-    @keyframes colorchange {
-      0% { color: red; }
-      25% { color: lime; }
-      50% { color: cyan; }
-      75% { color: yellow; }
-      100% { color: magenta; }
+    @keyframes fall {
+      from { transform: translateY(-10vh); }
+      to { transform: translateY(110vh); }
     }
-    .warning {
-      position: absolute;
-      font-size: 40px;
-      font-weight: bold;
-      animation: flash 0.3s infinite;
-    }
-    @keyframes flash {
-      0% { color: red; }
-      50% { color: yellow; }
-      100% { color: red; }
-    }
-    /* 彈出視窗 */
-    .popup {
+    /* 彈窗樣式 */
+    #virus-popup {
+      display: none;
       position: fixed;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
       background: #111;
+      color: red;
       padding: 20px;
       border: 2px solid red;
-      box-shadow: 0 0 20px red;
-      z-index: 9999;
-      text-align: center;
-      width: 300px;
       border-radius: 10px;
-      animation: flashBorder 1s infinite alternate;
+      text-align: center;
+      z-index: 9999;
     }
-    @keyframes flashBorder {
-      from { box-shadow: 0 0 10px red; border-color: red; }
-      to   { box-shadow: 0 0 25px yellow; border-color: yellow; }
-    }
-    .popup h2 {
-      color: red;
-      margin-bottom: 10px;
-    }
-    .popup p {
-      margin-bottom: 20px;
-      color: white;
+    #virus-popup button {
+      background: limegreen;
+      color: black;
     }
   </style>
 </head>
 <body>
-  <h1>你有沒有訂閱魔幻影？</h1>
-  <button onclick="showIntro()">有訂閱</button>
-  <button onclick="showVirus()">沒訂閱</button>
+  <h1>魔幻影Sksnki介紹</h1>
 
-  <!-- 警報音效 -->
-  <audio id="alarm" loop>
-    <source src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg" type="audio/ogg">
-  </audio>
+  <div id="about">
+    <p>嗨嗨，我是魔幻影Sksnki，是一位台灣的 YouTuber。<br>
+       主要拍 ROBLOX，有時會舉辦抽獎，記得訂閱我！</p>
+    <img src="IMG_6226CCFE5FA0-1.jpeg" alt="魔幻影圖片">
+    <br>
+    <button onclick="showVideo()">欣賞影片</button>
+  </div>
+
+  <div id="video-section">
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/xnxtU8qU9lo?autoplay=1" frameborder="0" allowfullscreen></iframe>
+    <br>
+    <button onclick="subscribed()">已訂閱</button>
+    <button onclick="notSubscribed()">未訂閱</button>
+  </div>
+
+  <div id="intro-section">
+    <p>感謝訂閱！這是我的頻道介紹：</p>
+    <img src="IMG_6226CCFE5FA0-1.jpeg" alt="魔幻影圖片">
+    <br>
+    <button onclick="gotoChannel()">我的頻道</button>
+  </div>
+
+  <div id="virus-section"></div>
+
+  <!-- 彈窗 -->
+  <div id="virus-popup">
+    <p>⚠️ 魔幻影版掃毒機器人檢測到你中毒<br>👉 訂閱魔幻影解除</p>
+    <button onclick="gotoChannel()">前往訂閱</button>
+  </div>
 
   <script>
-    // 顯示簡介
-    function showIntro() {
-      document.body.innerHTML = `
-        <div class="intro">
-          <h1>魔幻影Sksnki介紹</h1>
-          <p>嗨嗨，我是魔幻影Sksnki，是一位台灣的 YouTuber。<br>
-          主要拍 ROBLOX，有時會舉辦抽獎，記得訂閱我！</p>
-          <img src="IMG_6226CCFE5FA0-1.jpeg" alt="魔幻影Sksnki">
-          <br><br>
-          <button onclick="window.open('https://youtube.com/channel/UC0WCBNyLB9ip8jGmHKoQgNw?si=S1nxjb6Zlp3NYde-', '_blank')">
-            我的頻道
-          </button>
-        </div>
-      `;
+    const randomChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+=-🤓👍😂🔥💀👾";
+    const colors = ["red","lime","yellow","cyan","magenta","orange","white"];
+    let popupShown = false;
+
+    function showAbout() {
+      document.getElementById("about").style.display = "block";
     }
 
-    // 中毒效果
-    let interval = 300;
-    function showVirus() {
-      document.body.innerHTML = "";
-      spawnGlitch();
-      spawnWarning();
-      document.getElementById("alarm").play(); // 播放警報音效
-
-      // 2秒後跳出掃毒機器人視窗
-      setTimeout(showPopup, 2000);
+    function showVideo() {
+      document.getElementById("about").style.display = "none";
+      document.getElementById("video-section").style.display = "block";
     }
 
-    function spawnGlitch() {
-      let glitch = document.createElement("div");
-      glitch.className = "glitch";
-      glitch.style.left = Math.random() * window.innerWidth + "px";
-      glitch.style.top = Math.random() * window.innerHeight + "px";
-
-      let chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789#@$%^&*☠️🔥💀👾🤡🤖";
-      glitch.innerText = chars.charAt(Math.floor(Math.random() * chars.length));
-
-      document.body.appendChild(glitch);
-
-      interval = Math.max(20, interval - 10);
-      setTimeout(spawnGlitch, interval);
+    function subscribed() {
+      document.getElementById("video-section").style.display = "none";
+      document.getElementById("intro-section").style.display = "block";
     }
 
-    function spawnWarning() {
-      let warning = document.createElement("div");
-      warning.className = "warning";
-      warning.innerText = "⚠️ 你中病毒了 ⚠️";
+    function notSubscribed() {
+      document.body.style.background = "black";
+      document.body.style.color = "lime";
+      document.getElementById("video-section").style.display = "none";
+      document.getElementById("virus-section").style.display = "block";
+      setInterval(createFallingText, 50); // 更快速度
 
-      function moveWarning() {
-        warning.style.left = Math.random() * (window.innerWidth - 200) + "px";
-        warning.style.top = Math.random() * (window.innerHeight - 50) + "px";
+      if (!popupShown) {
+        setTimeout(() => {
+          document.getElementById("virus-popup").style.display = "block";
+          popupShown = true;
+        }, 2000); // 2秒後顯示掃毒機器人
+      }
+    }
+
+    function createFallingText() {
+      const elem = document.createElement("div");
+      elem.className = "falling";
+      elem.innerText = randomChars.charAt(Math.floor(Math.random() * randomChars.length));
+      elem.style.left = Math.random() * 100 + "vw";
+      elem.style.animationDuration = (Math.random() * 2 + 1) + "s";
+
+      // 隨機顏色
+      elem.style.color = colors[Math.floor(Math.random() * colors.length)];
+
+      // 有機率變彩色字體（不停變色）
+      if (Math.random() < 0.2) {
+        let interval = setInterval(() => {
+          elem.style.color = colors[Math.floor(Math.random() * colors.length)];
+        }, 100);
+        setTimeout(() => clearInterval(interval), 3000);
       }
 
-      document.body.appendChild(warning);
-      setInterval(moveWarning, 300);
+      document.body.appendChild(elem);
+      setTimeout(() => elem.remove(), 4000);
     }
 
-    // 掃毒機器人彈窗
-    function showPopup() {
-      let popup = document.createElement("div");
-      popup.className = "popup";
-      popup.innerHTML = `
-        <h2>⚠️ 魔幻影版掃毒機器人 ⚠️</h2>
-        <p>檢測到你中毒<br>訂閱魔幻影解除</p>
-        <button onclick="window.open('https://youtube.com/channel/UC0WCBNyLB9ip8jGmHKoQgNw?si=G-AoRnh9LDmERRPY', '_blank')">
-          前往訂閱
-        </button>
-      `;
-      document.body.appendChild(popup);
+    function gotoChannel() {
+      window.open("https://youtube.com/channel/UC0WCBNyLB9ip8jGmHKoQgNw?si=G-AoRnh9LDmERRPY", "_blank");
     }
+
+    // 預設顯示「關於我」
+    showAbout();
   </script>
 </body>
 </html>

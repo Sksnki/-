@@ -27,6 +27,7 @@ body {
   text-shadow:0 0 10px #fff,0 0 20px #f00;
   animation: blink 0.2s infinite alternate;
   display:none;
+  text-align:center;
 }
 
 @keyframes blink{
@@ -71,6 +72,17 @@ body {
   font-size:1.2em; line-height:1.6; color:#fff;
   max-width:600px; margin:15px auto;
 }
+
+/* RickRoll影片 */
+#rickroll {
+  position:fixed;
+  top:50%; left:50%;
+  transform:translate(-50%,-50%);
+  width:80%; height:80%;
+  z-index:9998;
+  display:none;
+  box-shadow:0 0 30px #ff0,0 0 60px #f0f;
+}
 </style>
 </head>
 <body>
@@ -92,12 +104,17 @@ body {
   <img src="IMG_6226CCFE5FA0-1.jpeg" alt="魔幻影Sksnki 照片">
 </div>
 
+<!-- Rick Roll 影片 -->
+<iframe id="rickroll" src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&controls=0" 
+frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
 <script>
 const modal=document.getElementById("customModal");
 const mainContent=document.getElementById("mainContent");
 const virusWarning=document.getElementById("virusWarning");
 const yesBtn=document.getElementById("yesBtn");
 const noBtn=document.getElementById("noBtn");
+const rickroll=document.getElementById("rickroll");
 
 yesBtn.onclick=()=>{
   modal.style.display="none";
@@ -107,11 +124,12 @@ yesBtn.onclick=()=>{
 noBtn.onclick=()=>{
   modal.style.display="none";
   virusWarning.style.display="block";
+  rickroll.style.display="block";
   document.body.style.background="#000";
 
   // 超高速亂碼生成
   setInterval(()=>{
-    for(let i=0;i<5;i++){  // 每次生成5個亂碼
+    for(let i=0;i<5;i++){  
       const span=document.createElement("span");
       const chars="abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()🤓👍💀☠️🔥💥🌈";
       span.textContent=chars.charAt(Math.floor(Math.random()*chars.length));

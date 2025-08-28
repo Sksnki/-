@@ -64,6 +64,11 @@
   <button onclick="showIntro()">有訂閱</button>
   <button onclick="showVirus()">沒訂閱</button>
 
+  <!-- 警報音效 -->
+  <audio id="alarm" loop>
+    <source src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg" type="audio/ogg">
+  </audio>
+
   <script>
     // 顯示簡介
     function showIntro() {
@@ -87,6 +92,7 @@
       document.body.innerHTML = "";
       spawnGlitch();
       spawnWarning();
+      document.getElementById("alarm").play(); // 播放警報音效
     }
 
     function spawnGlitch() {

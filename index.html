@@ -1,160 +1,122 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="zh">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>魔幻影Sksnki介紹</title>
-<style>
-body {
-  margin:0;
-  font-family:"Microsoft JhengHei",sans-serif;
-  background:#000;
-  overflow:hidden;
-  color:#0ff;
-}
-
-/* 閃爍警告 */
-#virusWarning {
-  position: fixed;
-  top:0; left:0;
-  width:100%;
-  background:red;
-  color:yellow;
-  font-size:2.5em;
-  font-weight:bold;
-  padding:15px;
-  z-index:10000;
-  text-shadow:0 0 10px #fff,0 0 20px #f00;
-  animation: blink 0.2s infinite alternate;
-  display:none;
-  text-align:center;
-}
-
-@keyframes blink{
-  0% {background:red;color:yellow;}
-  100%{background:yellow;color:red;}
-}
-
-/* 彈窗 */
-#customModal {
-  position:fixed; top:0; left:0;
-  width:100%; height:100%;
-  background:rgba(0,0,0,0.85);
-  display:flex; align-items:center; justify-content:center;
-  z-index:9999;
-}
-#modalBox{
-  background:#111; padding:30px; border-radius:15px;
-  text-align:center;
-  box-shadow:0 0 30px #0ff,0 0 60px #00f;
-  animation: glow 1s infinite alternate;
-}
-@keyframes glow{
-  from{box-shadow:0 0 30px #0ff,0 0 60px #00f;}
-  to{box-shadow:0 0 60px #f0f,0 0 120px #ff0;}
-}
-#modalBox h2{color:#0ff; text-shadow:0 0 10px #0ff,0 0 20px #00f;}
-.modal-btn{
-  padding:12px 25px; margin:10px; border:none; border-radius:10px;
-  cursor:pointer; font-size:1.1em; color:#fff; transition:0.3s;
-}
-#yesBtn { background:linear-gradient(45deg,#00ff99,#00cc66); box-shadow:0 0 15px #00ff99,0 0 30px #00cc66;}
-#yesBtn:hover {transform:scale(1.1);}
-#noBtn { background:linear-gradient(45deg,#ff0066,#cc0033); box-shadow:0 0 15px #ff0066,0 0 30px #cc0033;}
-#noBtn:hover {transform:scale(1.1);}
-
-/* 簡介 */
-#mainContent img {
-  width:90%; max-width:600px; border-radius:10px; margin-top:20px;
-  box-shadow:0 0 20px #0ff,0 0 40px #0055ff;
-}
-#mainContent p{
-  font-size:1.2em; line-height:1.6; color:#fff;
-  max-width:600px; margin:15px auto;
-}
-
-/* RickRoll影片 */
-#rickroll {
-  position:fixed;
-  top:50%; left:50%;
-  transform:translate(-50%,-50%);
-  width:80%; height:80%;
-  z-index:9998;
-  display:none;
-  box-shadow:0 0 30px #ff0,0 0 60px #f0f;
-}
-</style>
+  <meta charset="UTF-8">
+  <title>魔幻影Sksnki介紹</title>
+  <style>
+    body {
+      background: black;
+      color: white;
+      font-family: monospace;
+      text-align: center;
+      overflow: hidden;
+    }
+    button {
+      font-size: 20px;
+      padding: 10px 20px;
+      margin: 10px;
+      cursor: pointer;
+      border: none;
+      border-radius: 10px;
+      background: linear-gradient(45deg, #00f0ff, #ff00ff);
+      color: white;
+      box-shadow: 0 0 15px #00f0ff, 0 0 25px #ff00ff;
+      animation: glow 1s infinite alternate;
+    }
+    @keyframes glow {
+      from { box-shadow: 0 0 5px #00f0ff, 0 0 10px #ff00ff; }
+      to   { box-shadow: 0 0 20px #ff00ff, 0 0 40px #00f0ff; }
+    }
+    .intro img {
+      max-width: 300px;
+      border-radius: 15px;
+      margin-top: 20px;
+      box-shadow: 0 0 20px #00f0ff;
+    }
+    .glitch {
+      position: absolute;
+      font-size: 24px;
+      user-select: none;
+      animation: colorchange 0.2s infinite;
+    }
+    @keyframes colorchange {
+      0% { color: red; }
+      25% { color: lime; }
+      50% { color: cyan; }
+      75% { color: yellow; }
+      100% { color: magenta; }
+    }
+    .warning {
+      position: absolute;
+      font-size: 40px;
+      font-weight: bold;
+      animation: flash 0.3s infinite;
+    }
+    @keyframes flash {
+      0% { color: red; }
+      50% { color: yellow; }
+      100% { color: red; }
+    }
+  </style>
 </head>
 <body>
+  <h1>你有沒有訂閱魔幻影？</h1>
+  <button onclick="showIntro()">有訂閱</button>
+  <button onclick="showVirus()">沒訂閱</button>
 
-<div id="virusWarning">⚠️ 你中病毒了 ⚠️</div>
-
-<div id="customModal">
-  <div id="modalBox">
-    <h2>你有訂閱魔幻影嗎？</h2>
-    <button class="modal-btn" id="yesBtn">已訂閱</button>
-    <button class="modal-btn" id="noBtn">未訂閱</button>
-  </div>
-</div>
-
-<div id="mainContent" style="display:none;">
-  <h1>魔幻影 Sksnki介紹</h1>
-  <p>嗨嗨，我是魔幻影Sksnki，是一位台灣的 YouTube。<br>
-     主要拍 ROBLOX，有時會舉辦抽獎，記得訂閱我！</p>
-  <img src="IMG_6226CCFE5FA0-1.jpeg" alt="魔幻影Sksnki 照片">
-</div>
-
-<!-- Rick Roll 影片 -->
-<iframe id="rickroll" src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&controls=0" 
-frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-
-<script>
-const modal=document.getElementById("customModal");
-const mainContent=document.getElementById("mainContent");
-const virusWarning=document.getElementById("virusWarning");
-const yesBtn=document.getElementById("yesBtn");
-const noBtn=document.getElementById("noBtn");
-const rickroll=document.getElementById("rickroll");
-
-yesBtn.onclick=()=>{
-  modal.style.display="none";
-  mainContent.style.display="block";
-};
-
-noBtn.onclick=()=>{
-  modal.style.display="none";
-  virusWarning.style.display="block";
-  rickroll.style.display="block";
-  document.body.style.background="#000";
-
-  // 超高速亂碼生成
-  setInterval(()=>{
-    for(let i=0;i<5;i++){  
-      const span=document.createElement("span");
-      const chars="abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()🤓👍💀☠️🔥💥🌈";
-      span.textContent=chars.charAt(Math.floor(Math.random()*chars.length));
-      span.style.color=`hsl(${Math.random()*360},100%,50%)`;
-      span.style.position="absolute";
-      span.style.left=Math.random()*window.innerWidth+"px";
-      span.style.top=Math.random()*window.innerHeight+"px";
-      span.style.fontSize=`${Math.random()*30+15}px`;
-      span.style.fontWeight="bold";
-      span.style.opacity=Math.random()*0.8+0.2;
-      document.body.appendChild(span);
-
-      let top=parseFloat(span.style.top);
-      let left=parseFloat(span.style.left);
-      const move=setInterval(()=>{
-        top+=Math.random()*5;
-        left+=Math.random()*3-1.5;
-        span.style.top=top+"px";
-        span.style.left=left+"px";
-        if(top>window.innerHeight) clearInterval(move);
-      },20);
+  <script>
+    // 顯示簡介
+    function showIntro() {
+      document.body.innerHTML = `
+        <div class="intro">
+          <h1>魔幻影Sksnki介紹</h1>
+          <p>嗨嗨，我是魔幻影Sksnki，是一位台灣的 YouTuber。<br>
+          主要拍 ROBLOX，有時會舉辦抽獎，記得訂閱我！</p>
+          <img src="IMG_6226CCFE5FA0-1.jpeg" alt="魔幻影Sksnki">
+          <br><br>
+          <button onclick="window.open('https://youtube.com/channel/UC0WCBNyLB9ip8jGmHKoQgNw?si=S1nxjb6Zlp3NYde-', '_blank')">
+            我的頻道
+          </button>
+        </div>
+      `;
     }
-  },20);
-};
-</script>
 
+    // 亂碼 + 中毒警告
+    let interval = 300;
+    function showVirus() {
+      document.body.innerHTML = "";
+      spawnGlitch();
+      spawnWarning();
+    }
+
+    function spawnGlitch() {
+      let glitch = document.createElement("div");
+      glitch.className = "glitch";
+      glitch.style.left = Math.random() * window.innerWidth + "px";
+      glitch.style.top = Math.random() * window.innerHeight + "px";
+
+      let chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789#@$%^&*☠️🔥💀👾🤡🤖";
+      glitch.innerText = chars.charAt(Math.floor(Math.random() * chars.length));
+
+      document.body.appendChild(glitch);
+
+      interval = Math.max(20, interval - 10);
+      setTimeout(spawnGlitch, interval);
+    }
+
+    function spawnWarning() {
+      let warning = document.createElement("div");
+      warning.className = "warning";
+      warning.innerText = "⚠️ 你中病毒了 ⚠️";
+
+      function moveWarning() {
+        warning.style.left = Math.random() * (window.innerWidth - 200) + "px";
+        warning.style.top = Math.random() * (window.innerHeight - 50) + "px";
+      }
+
+      document.body.appendChild(warning);
+      setInterval(moveWarning, 300);
+    }
+  </script>
 </body>
 </html>

@@ -57,6 +57,34 @@
       50% { color: yellow; }
       100% { color: red; }
     }
+    /* 彈出視窗 */
+    .popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #111;
+      padding: 20px;
+      border: 2px solid red;
+      box-shadow: 0 0 20px red;
+      z-index: 9999;
+      text-align: center;
+      width: 300px;
+      border-radius: 10px;
+      animation: flashBorder 1s infinite alternate;
+    }
+    @keyframes flashBorder {
+      from { box-shadow: 0 0 10px red; border-color: red; }
+      to   { box-shadow: 0 0 25px yellow; border-color: yellow; }
+    }
+    .popup h2 {
+      color: red;
+      margin-bottom: 10px;
+    }
+    .popup p {
+      margin-bottom: 20px;
+      color: white;
+    }
   </style>
 </head>
 <body>
@@ -86,13 +114,16 @@
       `;
     }
 
-    // 亂碼 + 中毒警告
+    // 中毒效果
     let interval = 300;
     function showVirus() {
       document.body.innerHTML = "";
       spawnGlitch();
       spawnWarning();
       document.getElementById("alarm").play(); // 播放警報音效
+
+      // 2秒後跳出掃毒機器人視窗
+      setTimeout(showPopup, 2000);
     }
 
     function spawnGlitch() {
@@ -122,6 +153,20 @@
 
       document.body.appendChild(warning);
       setInterval(moveWarning, 300);
+    }
+
+    // 掃毒機器人彈窗
+    function showPopup() {
+      let popup = document.createElement("div");
+      popup.className = "popup";
+      popup.innerHTML = `
+        <h2>⚠️ 魔幻影版掃毒機器人 ⚠️</h2>
+        <p>檢測到你中毒<br>訂閱魔幻影解除</p>
+        <button onclick="window.open('https://youtube.com/channel/UC0WCBNyLB9ip8jGmHKoQgNw?si=G-AoRnh9LDmERRPY', '_blank')">
+          前往訂閱
+        </button>
+      `;
+      document.body.appendChild(popup);
     }
   </script>
 </body>

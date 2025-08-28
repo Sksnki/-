@@ -1,158 +1,154 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8">
-  <title>魔幻影Sksnki介紹</title>
-  <style>
-    body {
-      background: black;
-      color: white;
-      font-family: Arial, sans-serif;
-      text-align: center;
-      overflow: hidden;
-    }
-    #about, #video-section, #intro-section, #virus-section {
-      display: none;
-    }
-    img {
-      max-width: 300px;
-      border-radius: 10px;
-    }
-    button {
-      background: red;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      margin: 10px;
-      cursor: pointer;
-      font-size: 18px;
-      border-radius: 5px;
-    }
-    .falling {
-      position: absolute;
-      font-size: 20px;
-      animation: fall linear forwards;
-    }
-    @keyframes fall {
-      from { transform: translateY(-10vh); }
-      to { transform: translateY(110vh); }
-    }
-    /* 彈窗樣式 */
-    #virus-popup {
-      display: none;
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: #111;
-      color: red;
-      padding: 20px;
-      border: 2px solid red;
-      border-radius: 10px;
-      text-align: center;
-      z-index: 9999;
-    }
-    #virus-popup button {
-      background: limegreen;
-      color: black;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>魔幻影Sksnki介紹</title>
+<style>
+body {
+  margin:0;
+  font-family:"Microsoft JhengHei",sans-serif;
+  background:black;
+  color:#0ff;
+  overflow:hidden;
+  text-align:center;
+}
+h1 { margin:20px 0; font-size:2.5em; color:#0ff; text-shadow: 0 0 10px #0ff; }
+button {
+  padding:12px 25px;
+  margin:10px;
+  border:none;
+  border-radius:8px;
+  font-size:1em;
+  cursor:pointer;
+  background: linear-gradient(45deg, #00bfff, #0055ff);
+  color:white;
+  box-shadow:0 0 15px #00bfff,0 0 30px #0055ff;
+  transition:0.3s;
+}
+button:hover { transform:scale(1.05); box-shadow:0 0 20px #00bfff,0 0 40px #0055ff; }
+#about, #video-section, #intro-section, #virus-section { display:none; }
+img { max-width:300px; border-radius:10px; margin-top:20px; }
+.falling {
+  position:absolute;
+  font-size:20px;
+  animation:fall linear forwards;
+  user-select:none;
+}
+@keyframes fall { from {transform:translateY(-10vh);} to {transform:translateY(110vh);} }
+#virus-popup {
+  display:none;
+  position:fixed;
+  top:50%; left:50%;
+  transform:translate(-50%,-50%);
+  background:#111; color:red; padding:20px;
+  border:2px solid red; border-radius:10px;
+  text-align:center; z-index:9999;
+}
+#virus-popup button { background:limegreen; color:black; }
+#particle-canvas {
+  position:fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  pointer-events:none;
+  z-index:0;
+}
+</style>
 </head>
 <body>
-  <h1>魔幻影Sksnki介紹</h1>
+<h1>魔幻影Sksnki介紹</h1>
 
-  <div id="about">
-    <p>嗨嗨，我是魔幻影Sksnki，是一位台灣的 YouTuber。<br>
-       主要拍 ROBLOX，有時會舉辦抽獎，記得訂閱我！</p>
-    <img src="IMG_6226CCFE5FA0-1.jpeg" alt="魔幻影圖片">
-    <br>
-    <button onclick="showVideo()">欣賞影片</button>
-  </div>
+<div id="about">
+<p>嗨嗨，我是魔幻影Sksnki，是一位台灣的 YouTuber。<br>主要拍 ROBLOX，有時會舉辦抽獎，記得訂閱我！</p>
+<img src="IMG_6226CCFE5FA0-1.jpeg" alt="魔幻影圖片">
+<br><button onclick="showVideo()">欣賞影片</button>
+</div>
 
-  <div id="video-section">
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/xnxtU8qU9lo?autoplay=1" frameborder="0" allowfullscreen></iframe>
-    <br>
-    <button onclick="subscribed()">已訂閱</button>
-    <button onclick="notSubscribed()">未訂閱</button>
-  </div>
+<div id="video-section">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/xnxtU8qU9lo?autoplay=1" frameborder="0" allowfullscreen></iframe>
+<br>
+<button onclick="subscribed()">已訂閱</button>
+<button onclick="notSubscribed()">未訂閱</button>
+</div>
 
-  <div id="intro-section">
-    <p>感謝訂閱！這是我的頻道介紹：</p>
-    <img src="IMG_6226CCFE5FA0-1.jpeg" alt="魔幻影圖片">
-    <br>
-    <button onclick="gotoChannel()">我的頻道</button>
-  </div>
+<div id="intro-section">
+<p>感謝訂閱！這是我的頻道介紹：</p>
+<img src="IMG_6226CCFE5FA0-1.jpeg" alt="魔幻影圖片">
+<br><button onclick="gotoChannel()">我的頻道</button>
+</div>
 
-  <div id="virus-section"></div>
+<div id="virus-section"></div>
 
-  <!-- 彈窗 -->
-  <div id="virus-popup">
-    <p>⚠️ 魔幻影版掃毒機器人檢測到你中毒<br>👉 訂閱魔幻影解除</p>
-    <button onclick="gotoChannel()">前往訂閱</button>
-  </div>
+<div id="virus-popup">
+<p>⚠️ 魔幻影版掃毒機器人檢測到你中毒<br>👉 訂閱魔幻影解除</p>
+<button onclick="gotoChannel()">前往訂閱</button>
+</div>
 
-  <script>
-    const randomChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+=-🤓👍😂🔥💀👾";
-    const colors = ["red","lime","yellow","cyan","magenta","orange","white"];
-    let popupShown = false;
+<canvas id="particle-canvas"></canvas>
 
-    function showAbout() {
-      document.getElementById("about").style.display = "block";
-    }
+<script>
+const randomChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+=-🤓👍😂🔥💀👾";
+const colors = ["red","lime","yellow","cyan","magenta","orange","white"];
+let popupShown=false;
 
-    function showVideo() {
-      document.getElementById("about").style.display = "none";
-      document.getElementById("video-section").style.display = "block";
-    }
+function showAbout(){document.getElementById("about").style.display="block";}
+function showVideo(){
+  document.getElementById("about").style.display="none";
+  document.getElementById("video-section").style.display="block";
+}
+function subscribed(){
+  document.getElementById("video-section").style.display="none";
+  document.getElementById("intro-section").style.display="block";
+}
+function notSubscribed(){
+  document.getElementById("video-section").style.display="none";
+  document.getElementById("virus-section").style.display="block";
+  setInterval(createFallingText,30);
+  if(!popupShown){setTimeout(()=>{document.getElementById("virus-popup").style.display="block"; popupShown=true;},1500);}
+}
+function createFallingText(){
+  const elem=document.createElement("div");
+  elem.className="falling";
+  elem.innerText=randomChars.charAt(Math.floor(Math.random()*randomChars.length));
+  elem.style.left=Math.random()*100+"vw";
+  elem.style.fontSize=(15+Math.random()*25)+"px";
+  elem.style.color=colors[Math.floor(Math.random()*colors.length)];
+  elem.style.transform="rotate("+(Math.random()*360)+"deg)";
+  document.body.appendChild(elem);
+  // 隨機顏色變化
+  if(Math.random()<0.3){
+    let interval=setInterval(()=>{elem.style.color=colors[Math.floor(Math.random()*colors.length)];},50);
+    setTimeout(()=>clearInterval(interval),3000);
+  }
+  setTimeout(()=>elem.remove(),3000);
+}
+function gotoChannel(){window.open("https://youtube.com/channel/UC0WCBNyLB9ip8jGmHKoQgNw?si=G-AoRnh9LDmERRPY","_blank");}
 
-    function subscribed() {
-      document.getElementById("video-section").style.display = "none";
-      document.getElementById("intro-section").style.display = "block";
-    }
+// 粒子背景
+const canvas=document.getElementById("particle-canvas");
+const ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth; canvas.height=window.innerHeight;
+const particles=[];
+for(let i=0;i<80;i++){
+  particles.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,dx:(Math.random()-0.5)*2,dy:(Math.random()-0.5)*2,r:Math.random()*2+1});
+}
+function animateParticles(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  particles.forEach(p=>{
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fillStyle="rgba(0,191,255,0.7)";
+    ctx.fill();
+    p.x+=p.dx; p.y+=p.dy;
+    if(p.x<0||p.x>canvas.width)p.dx*=-1;
+    if(p.y<0||p.y>canvas.height)p.dy*=-1;
+  });
+  requestAnimationFrame(animateParticles);
+}
+animateParticles();
 
-    function notSubscribed() {
-      document.body.style.background = "black";
-      document.body.style.color = "lime";
-      document.getElementById("video-section").style.display = "none";
-      document.getElementById("virus-section").style.display = "block";
-      setInterval(createFallingText, 50); // 更快速度
-
-      if (!popupShown) {
-        setTimeout(() => {
-          document.getElementById("virus-popup").style.display = "block";
-          popupShown = true;
-        }, 2000); // 2秒後顯示掃毒機器人
-      }
-    }
-
-    function createFallingText() {
-      const elem = document.createElement("div");
-      elem.className = "falling";
-      elem.innerText = randomChars.charAt(Math.floor(Math.random() * randomChars.length));
-      elem.style.left = Math.random() * 100 + "vw";
-      elem.style.animationDuration = (Math.random() * 2 + 1) + "s";
-
-      // 隨機顏色
-      elem.style.color = colors[Math.floor(Math.random() * colors.length)];
-
-      // 有機率變彩色字體（不停變色）
-      if (Math.random() < 0.2) {
-        let interval = setInterval(() => {
-          elem.style.color = colors[Math.floor(Math.random() * colors.length)];
-        }, 100);
-        setTimeout(() => clearInterval(interval), 3000);
-      }
-
-      document.body.appendChild(elem);
-      setTimeout(() => elem.remove(), 4000);
-    }
-
-    function gotoChannel() {
-      window.open("https://youtube.com/channel/UC0WCBNyLB9ip8jGmHKoQgNw?si=G-AoRnh9LDmERRPY", "_blank");
-    }
-
-    // 預設顯示「關於我」
-    showAbout();
-  </script>
+// 預設顯示關於我
+showAbout();
+</script>
 </body>
 </html>
